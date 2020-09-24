@@ -2,11 +2,11 @@
 
 ### GitHub Code Repository : https://github.com/andrewdownsau/thief_game_terminal_app
 
-<br><hr>
+<br>
 
 ## Installation and setup
 
-<br><hr>
+<br>
 
 ## Software Development Plan
 
@@ -78,7 +78,7 @@ An expansion feature of the game is to include a deck of cards that adds more co
 
 The scope of this project will allow for the group of players to run the game application on a single terminal window or (if there is enough time to implement) through a series of networked terminals run through a host server. If there is enough time to implement further I would like to create a series of rudimentary AIs to play against so a single user can play through the game.
 
-<br><hr>
+<br>
 
 ## Minimum Viable Product Features
 
@@ -99,7 +99,7 @@ Listed are a number of features that are defined as actions that the user should
 - Current player who chooses to continue/steal the turn is presented with the option to hold as many valid values or sets to add to their accumulated total for that turn (but they must select at least one). By default all valid values and sets are selected and show how the accumulated pot will add to their score. Once they are happy with their held dice they have the option to then roll the remaining dice (which shows how many are unselected as the user selects) to continue the process. 
 
 
-<br><hr>
+<br>
 
 ## Expanded features (may not be included in the scope of current assignment):
 
@@ -110,3 +110,34 @@ Listed are a number of features that are defined as actions that the user should
 - Option to opt-in at any point rudimentary AI players that have random funny names (eg V1Ki, ST3V3) that have very predictable choices in a narrow scope (eg: always chooses to steal if 3 or more dice still to roll, never ends turn unless have 2 or 1 dice left). This is just to give the user someone to play with as well as to train themselves to get better or understand the game beyond the tutorial.
 
 - Option to host and join online servers to play with other players on different devices. This is much more advanced and will only be attempted if there is time.
+
+<br>
+
+## User interaction outline
+
+The user will first need to follow the instructions outlined for installation and setup as shown in the top section of the README.md file. Once they have followed the instructions and run the application, they will access a main menu which will have a welcome message to instruct them to navigate through the menu options using the arrow keys on their keyboard. The options present will be in plain english and include (for MVP):
+- Learn the rules of Thief
+- Start a new game
+- Quit
+
+The tutorial option will then go through the setup for the game with a step by step process driven by the user directing the steps with the left and right arrow keys (which will appear as an instruction at the top of the terminal window for each instruction stage). At each step there will be text at the bottom of the screen with notes to explain what is going on and the reasoning behind game choices. At any point they can quit the tutorial by pressing the "q" key on their keyboard (which also appears in the instructions above).
+
+New game option brings the user to a setup menu where they input the number of players (int between 3-6) and then a following prompt that allows the users to input their individual names depending on the number of players in the game. This is the only instance of a user option that is not a tty-prompt and will require that the user inputs valid response between 3-15 characters for the player names and a integer value between 3-6 for the number of players. If the user does not input the correct values, an error will flag and the user will be asked to repeat their response with the proper values.
+
+In the game loop proper, the player order will be randomly chosen with the active player highlighted in the header scoreboard. This player will then be instructed to select the option to roll the number of dice available (not held, starts with full 5 set). The output of the roll will show as a series of numbers with valid values/sets highlighted (sets will be encompassed with []). In outcome 1 where there are valid and invalid values/sets, the user then is prompted to select between two options of re-rolling or ending their turn.
+
+If they choose to re-roll all dice values/sets are un-highlighted and the user is instructed to select the values/sets that they would like to hold for the subsequent rolls (and that at least one must be selected). Once selected the values/set are highlighted in a different color/style to denote a "held" status (which remains until either outcome 2 or 3 is reached). When satisfied with their selection, the user is then instructed to select the prompt for the re-roll and the process continues with the remaining dice.
+
+If the user chooses to end their turn then the active player highlight moves to the next in the sequence and they are then prompted to ask whether they want to steal the previous player's turn. 
+
+If they choose to not steal then they begin a new turn and the previous player's pot gets added to their total score.
+
+If they choose to steal then the pot moves to them and that player now continues the previous player's turn but must re-roll at least once before ending their turn. They are not provided the option to end their turn until have rolled the remaining dice that have not been held.
+
+In outcome 2 where there are no valid values/sets from the dice rolled then the active player ends their turn, receives no points added to their score and the highlighted active player moves to the next one in the sequence.
+
+In outcome 3 where all 5 dice have a valid value/set then the held dice become un-held, the accumulated points stay in the pot and the active player is prompted to continue their turn by rolling all 5 dice again.
+
+At any point in the game (for MVP) the players can end the game and return to the menu by pressing "q" while in the game loop. This option is shown as a footer in the game area.
+
+This application focuses on creating a user experience that minimizes the need for error handling from the user inputs. Almost all menu options from the terminal app will be using tty-prompt options with the exception of the feature that accepts a string input of the player's names and the number input for the number of players. 
