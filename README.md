@@ -126,7 +126,7 @@ New game option brings the user to a setup menu where they input the number of p
 
 In the game loop proper, the player order will be randomly chosen with the active player highlighted in the header scoreboard. This player will then be instructed to select the option to roll the number of dice available (not held, starts with full 5 set). The output of the roll will show as a series of numbers with valid values/sets highlighted (sets will be encompassed with []). In outcome 1 where there are valid and invalid values/sets, the user then is prompted to select between two options of re-rolling or ending their turn.
 
-If they choose to re-roll all dice values/sets are un-highlighted and the user is instructed to select the values/sets that they would like to hold for the subsequent rolls (and that at least one must be selected). Once selected the values/set are highlighted in a different color/style to denote a "held" status (which remains until either outcome 2 or 3 is reached). When satisfied with their selection, the user is then instructed to select the prompt for the re-roll and the process continues with the remaining dice.
+If they choose to re-roll the user is instructed to select the values/sets that they would like to hold for the subsequent rolls (and that at least one must be selected). Once selected the values/set are highlighted in a different color/style to denote a "held" status (which remains until either outcome 2 or 3 is reached). When satisfied with their selection, the user is then instructed to select the prompt for the re-roll and the process continues with the remaining dice.
 
 If the user chooses to end their turn then the active player highlight moves to the next in the sequence and they are then prompted to ask whether they want to steal the previous player's turn. 
 
@@ -140,4 +140,25 @@ In outcome 3 where all 5 dice have a valid value/set then the held dice become u
 
 At any point in the game (for MVP) the players can end the game and return to the menu by pressing "q" while in the game loop. This option is shown as a footer in the game area.
 
+The entire game area will look something like this:
+
+```
+**Sarah: 2300 + [350]** Mike: 4500 John: 300 Fran: 1200
+
+Instructions: Please select held values (styled as bold) and select re-roll to roll remaining die/dice
+
+> **[ 3 3 3 ]** 
+> 4 
+> **5**
+> Re-roll remain 1 die
+
+Any user can quit application by "q" on the keyboard
+```
+
 This application focuses on creating a user experience that minimizes the need for error handling from the user inputs. Almost all menu options from the terminal app will be using tty-prompt options with the exception of the feature that accepts a string input of the player's names and the number input for the number of players. 
+
+<br>
+
+## Control Flow Diagram for MVP
+
+![Control Flow Diagram](/docs/MVPControlFlowChart.pdf)
