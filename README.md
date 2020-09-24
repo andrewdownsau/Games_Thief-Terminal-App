@@ -161,4 +161,4 @@ This application focuses on creating a user experience that minimizes the need f
 
 ## Control Flow Diagram for MVP
 
-![Control Flow Diagram](/docs/MVPControlFlowChart.pdf)
+![Control Flow Diagram](/docs/MVPControlFlowChart.png)
