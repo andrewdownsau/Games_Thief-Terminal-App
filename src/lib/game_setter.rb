@@ -87,7 +87,7 @@ class GameSetter
     end
     system("clear")
     case selection
-    when '1' then puts "Start Game"
+    when '1' then @exit = true
     when '2' then initialize
     when '3' then @exit = true
     end
@@ -107,6 +107,7 @@ class GameSetter
         break if @exit
       end
     end
+    return @players
   end
 
 end

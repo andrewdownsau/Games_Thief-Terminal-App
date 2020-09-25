@@ -5,6 +5,8 @@ require 'tty-prompt'
 require_relative 'game_helper'
 require_relative 'game_setter'
 require_relative 'game_helper'
+require_relative 'game'
+require_relative 'game_board'
 require_relative 'game_repository'
 
 class Menu
@@ -29,7 +31,7 @@ class Menu
       system("clear")
       case selection
       when '1' then puts "Tutorial Selected"
-      when '2' then puts @game_repository.create_new_game
+      when '2' then puts @game_repository.start_new_game
       when '3' then exit
       end
     end

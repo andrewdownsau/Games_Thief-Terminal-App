@@ -4,17 +4,18 @@ class GameRepository
     @games = []
   end
 
-  def create_new_game
+  def start_new_game
     system("clear")
     game_setter_instance = GameSetter.new
-    game_setter_instance.settings_user_input
+    game_players = game_setter_instance.settings_user_input
+    new_game = Game.new(game_players) if game_players
+    game_board = GameBoard.new(new_game)
 
-    # @games << Game.new(
-    #   @games.length + 1,
-    #   game_player_number,
-    #   game_players
-    # )
+    game_board.main_game_loop
+
     # puts "Thanks for entering all that info :)"
+    # pp game_players
+    # gets.chomp
   end
 
 end
