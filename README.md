@@ -66,13 +66,12 @@ At the beginning of a new turn a player rolls 5 dice, the following outcomes can
 - Outcome 1: Valid values or sets are present with other values not present: player has the choice of passing or holding at least one of their dice values/sets and rolling the remaining dice to increase their score.
 - Outcome 2: No values or sets are present with dice that are rolled: player's turn is forfeit and no points added to overall score, next players turn
 - Outcome 3: All 5 dice results are valid values or sets: the player rolling chains their current points and rolls the full set again
+- Outcome 4: Game round ends when first player reaches 10,000 points (players cannot steal if total goes over limit for rolling player)
 
 After a player has passed their turn:
 - The next player has the option to steal the last player's score or play their own turn.
   - If they steal they continue the turn as though it were theirs with the dice values and accumulated points present
   - If they don't steal the player who was just rolling adds the accumulated points to their score, then it's the next players turn
-
-- Game round ends when first player reaches 10,000 points (players cannot steal if total goes over limit for rolling player)
 
 An expansion feature of the game is to include a deck of cards that adds more complexity to the game in that players can on their or other's turn play game cards that provide buffs and de-buffs to the current rolling player.
 
@@ -80,7 +79,7 @@ The scope of this project will allow for the group of players to run the game ap
 
 <br>
 
-## Minimum Viable Product Features
+## Minimum Viable Product (MVP) Features
 
 Listed are a number of features that are defined as actions that the user should be able to perform when interacting with the program:
 
@@ -145,7 +144,7 @@ The entire game area will look something like this:
 ```
 **Sarah: 2300 + [350]** Mike: 4500 John: 300 Fran: 1200
 
-Instructions: Please select held values (styled as bold) and select re-roll to roll remaining die/dice
+Instructions: [Sarah] Please select held values (styled as bold) and select re-roll to roll remaining die/dice
 
 > **[ 3 3 3 ]** 
 > 4 
@@ -162,3 +161,82 @@ This application focuses on creating a user experience that minimizes the need f
 ## Control Flow Diagram for MVP
 
 ![Control Flow Diagram](/docs/MVPControlFlowChart.png)
+
+<br>
+
+## Implementation Plan
+
+### Terminal Application Features:
+
+<table>
+<tr>
+  <th>Priority</th>
+  <th>Feature</th>
+  <th>Due Date</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td>Main game menu</td>
+  <td>25/09/2020</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>New game setup</td>
+  <td>25/09/2020</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>Main game loop</td>
+  <td>28/09/2020</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td>Tutorial</td>
+  <td>01/10/2020</td>
+</tr>
+</table>
+
+<br>
+
+### Trello Project Link: https://trello.com/b/cWEVFkIC/terminal-app-thief-game
+
+<br>
+
+### Implementation Details:
+
+Main game menu
+- As a user, view welcome message to welcome to game and instruct on option controls
+- Be provided with a menu loop with tty-prompt providing options of tutorial, new game and quit
+- User must be able to run the application and be brought to the main menu display
+- As a user, I want to select the menu options through a tty-prompt selection system
+- As a user I want the experience of using the game to be easy to see what is important, system clears will be used to cut away extra content
+
+
+New game setup
+- As a user, I want to be able to set the number of players in this game. I need instructions and a prompt to input a number value between 3-6 inclusive
+- Once number of players are set I need to as a user be able to input player names there must be:
+  - Instructions indicating input must be a valid string of characters between 3-15 long
+  - User prompt showing input area for player x name:
+- When each player is submitted, the user must indicate that they have inputted the correct name (as editing isn't a feature) with a y/n response
+- When confirmed the player is greeted and added to a list of players below the user name prompt
+- When the list is completed the user must be prompted with an option to continue, start again or quit.
+
+Main game loop
+- User must be able to see player's scores, instructions for what to do in their turn stage, tty-prompt options as well as the footer instructing quit option on game loop display
+- User must be able to roll indicated number of dice from prompt, this selection must result in the roll being executed and the outcome calculated and displayed
+- If roll results in outcome 2 or 3 the user must be able to have enough time to see those results (instructions change to results description) as they unfold
+- If roll results in outcome 4 (player's score reached 10000 or above) then the game ends and the entire group is asked (with instructions and prompt) whether to play another game or quit to the main menu
+- If roll results in outcome 1 then the user must be given a display of the results and instructions with a prompt to continue or end their turn
+- If user selects to end their turn then a prompt with instructions directed at the next player is displayed with the option to steal the active player's turn or start a new turn and allow the pot to go to the active player
+- If the next user selects not to steal then the pot value in the scoreboard is added to the active player's total and the next player starts their turn 
+- If the active player/ selects to continue their turn they are then instructed and prompted to hold at least one valid un-held dice value/set and submit holding to go to a new roll
+
+Tutorial
+- As a user I need to know how to navigate through the tutorial
+- As a user I want to know what the tutorial will show with a contents page at the beginning
+- Subsequent pages the user must have enough information to inform, without overloading
+- User must be able to quit the tutorial at any time with typing the "q" and those instructions provided on every page
+- User must be shown what page number they are on so they can see how far they've progressed through
+
+
+
