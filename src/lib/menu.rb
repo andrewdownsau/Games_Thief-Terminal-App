@@ -3,11 +3,17 @@ require 'terminal-table'
 require 'tty-prompt'
 #files
 require_relative 'game_helper'
-require_relative 'game'
+require_relative 'game_setter'
+require_relative 'game_helper'
+require_relative 'game_repository'
 
 class Menu
 
   include GameHelper
+
+  def initialize
+    @game_repository = GameRepository.new
+  end
 
   def selection
     puts "Welcome to my Theif Terminal Game!"
@@ -23,7 +29,7 @@ class Menu
       system("clear")
       case selection
       when '1' then puts "Tutorial Selected"
-      when '2' then puts Game.create_new_game
+      when '2' then puts @game_repository.create_new_game
       when '3' then exit
       end
     end
