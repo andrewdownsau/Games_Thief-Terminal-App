@@ -3,6 +3,7 @@ require 'terminal-table'
 require 'tty-prompt'
 #files
 require_relative 'game_helper'
+require_relative 'game'
 
 class Menu
 
@@ -22,7 +23,7 @@ class Menu
       system("clear")
       case selection
       when '1' then puts "Tutorial Selected"
-      when '2' then puts "New Game Selected"
+      when '2' then puts Game.create_new_game
       when '3' then exit
       end
     end
