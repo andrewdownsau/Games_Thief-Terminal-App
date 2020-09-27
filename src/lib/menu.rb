@@ -2,7 +2,6 @@
 require 'terminal-table'
 require 'tty-prompt'
 #files
-require_relative 'game_helper'
 require_relative 'game_setter'
 require_relative 'game_helper'
 require_relative 'game'
