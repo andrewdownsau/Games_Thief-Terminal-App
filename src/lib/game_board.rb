@@ -37,27 +37,19 @@ class GameBoard
     end
   end
 
-  def roll_result_calculator
+  def roll_generator
     puts "Roll output: "
-    index = 0
-    valid_values = 0
-    valid_set = []
-    while index < 5
-      unless @game.last_roll_values[index][1]
-        @game.last_roll_values[index][0] = rand(1..6)
-      end
-      print "#{@game.last_roll_values[index][0]} "
-      index += 1
-    end
-    
-    if 
-
+    roll_arr = []
+    5.times { roll_arr.push(rand(1..6)) }
+    p roll_arr
+    roll_calc = RollCalculator.new(roll_arr)
+    roll_calc.calculate_roll
   end
 
   def prompt_resolver
     case user_prompt
     when 'roll'
-      roll_result_calculator
+      roll_generator
     end
   end
 
