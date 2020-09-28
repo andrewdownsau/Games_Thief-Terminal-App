@@ -6,60 +6,61 @@ class GameBoard
 
   def initialize(game)
     @game = game
+    @scoreboard = "Scoreboard: "
+    @instruction = "\n[#{@game.active_player}] New turn, please roll all 5 dice\n\n"
+    @result = "No result to display, please select action"
+    @user_prompt = [
+      "Please select:", 
+      ["Roll #{@game.rollable_dice} dice","Exit game"], 
+      ['roll', 'exit']
+    ]
   end
 
-  def scoreboard
-    print "Scoreboard: "
+  def set_scoreboard
+    system("clear")
+    @scoreboard = "Scoreboard: "
     @game.players.each do |player|
-      print "#{player}: #{@game.scores[player]} "
+      @scoreboard << "#{player}: #{@game.scores[player]} "
     end
+    @scoreboard
   end
 
-  def turn_instruction
-    print "\n\n[#{@game.active_player}] "
-    case @game.game_choices_log.last[1]
-    when "new_turn"
-      print "This is a start of a new turn, please roll all 5 dice\n\n"
-    else
-      puts "Error, cannot distinguish activity insturction"
-    end
-  end
-
-  def user_prompt
-    case @game.game_choices_log.last[1]
-    when "new_turn"
-      PROMPT.select('Please select:') do |menu|
-        menu.choice({ name: "Roll #{@game.rollable_dice} dice", value: 'roll' })
-        menu.choice({ name: 'Exit game', value: '0' })
+  def set_user_prompt
+    puts ""
+    PROMPT.select(@user_prompt[0]) do |menu|
+      for i in 0..@user_prompt[1].length do
+        menu.choice({ name: @user_prompt[1][i], value: @user_prompt[2][i] })
       end
-    else
-      puts "Error, cannot distinguish activity insturction"
     end
-  end
-
-  def roll_generator
-    puts "Roll output: "
-    roll_arr = []
-    5.times { roll_arr.push(rand(1..6)) }
-    p roll_arr
-    roll_calc = RollCalculator.new(roll_arr)
-    roll_calc.calculate_roll
   end
 
   def prompt_resolver
-    case user_prompt
+    case set_user_prompt
     when 'roll'
-      roll_generator
+      roll_calc = RollCalculator.new
+      @result = roll_calc.roll_outcome
+      roll_calc.calculate_roll
+      @instruction = "\n[#{@game.active_player}] Dice cast, please select at least one value/set to hold to pot\n\n"
+    
+      # generate_roll_selection_prompt(roll_calc)
+    end
+  end
+
+  def generate_roll_selection_prompt(roll_calc)
+    valid_arr =  roll_calc.return_hash[:valid]
+    PROMPT.select('\nValid dice values/sets to hold:') do |menu|
+      for i in 0..valid_arr.length-1 do
+        menu.choice({ name: "#{valid_arr[i]}", value: "#{[i]}"})
+      end
     end
   end
 
   def main_game_loop
     loop do
-      scoreboard
-      turn_instruction
+      puts set_scoreboard
+      puts @instruction
+      puts @result
       prompt_resolver
-      gets.chomp
-      break
     end
   end
 
