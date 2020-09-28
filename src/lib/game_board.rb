@@ -28,31 +28,21 @@ class GameBoard
   def set_user_prompt
     puts ""
     PROMPT.select(@user_prompt[0]) do |menu|
-      for i in 0..@user_prompt[1].length do
-        menu.choice({ name: @user_prompt[1][i], value: @user_prompt[2][i] })
+      unless @user_prompt[1].length == 0
+        for i in 0..@user_prompt[1].length-1 do
+          menu.choice({ name: @user_prompt[1][i], value: @user_prompt[2][i] })
+        end
+      else
+        puts "No valid values"
+        gets.chomp
       end
     end
   end
 
-  def prompt_resolver
-    case set_user_prompt
-    when 'roll'
-      roll_calc = RollCalculator.new
-      @result = roll_calc.roll_outcome
-      roll_calc.calculate_roll
-      @instruction = "\n[#{@game.active_player}] Dice cast, please select at least one value/set to hold to pot\n\n"
-    
-      # generate_roll_selection_prompt(roll_calc)
-    end
-  end
-
-  def generate_roll_selection_prompt(roll_calc)
-    valid_arr =  roll_calc.return_hash[:valid]
-    PROMPT.select('\nValid dice values/sets to hold:') do |menu|
-      for i in 0..valid_arr.length-1 do
-        menu.choice({ name: "#{valid_arr[i]}", value: "#{[i]}"})
-      end
-    end
+  def reset_from_prompt_response(prompt_response)
+    @instruction = prompt_response[0]
+    @result = prompt_response[1]
+    @user_prompt = prompt_response[2]
   end
 
   def main_game_loop
@@ -60,7 +50,10 @@ class GameBoard
       puts set_scoreboard
       puts @instruction
       puts @result
-      prompt_resolver
+      user_selection = set_user_prompt
+      user_prompt_router = UserPromptRouter.new(user_selection, @game.active_player)
+      user_prompt_router.resolve_prompt
+      reset_from_prompt_response(user_prompt_router.return_arr)
     end
   end
 
