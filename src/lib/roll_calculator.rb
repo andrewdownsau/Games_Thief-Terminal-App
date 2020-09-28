@@ -1,6 +1,14 @@
 class RollCalculator
-  def initialize(roll_arr)
-    @roll_arr = roll_arr
+  attr_reader :return_hash, :roll_outcome
+
+  def initialize
+    @roll_arr = []
+    5.times { @roll_arr.push(rand(1..6)) }
+    @roll_outcome = "Roll results: "
+    for i in 0..4 do
+      @roll_outcome << "#{@roll_arr[i]} "
+    end 
+    puts "\n\n"
     @return_hash = {valid: [], invalid: []}
   end
 
@@ -38,13 +46,11 @@ class RollCalculator
     end
   end
 
-
   def calculate_roll
     # input array: [3, 4, 3, 5, 3]
     # return hash: {valid: [[3,3,3],5], invalid: 4}
     check_straight
     check_set
     check_1_5
-    p @return_hash
   end
 end
