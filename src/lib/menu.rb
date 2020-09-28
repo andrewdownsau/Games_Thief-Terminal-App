@@ -1,6 +1,8 @@
 # gems
 require 'terminal-table'
 require 'tty-prompt'
+require 'colorize'
+
 #files
 require_relative 'game_setter'
 require_relative 'game_helper'
@@ -9,6 +11,7 @@ require_relative 'game_board'
 require_relative 'game_repository'
 require_relative 'roll_calculator'
 require_relative 'user_prompt_router'
+require_relative 'pot_calculator'
 
 class Menu
 

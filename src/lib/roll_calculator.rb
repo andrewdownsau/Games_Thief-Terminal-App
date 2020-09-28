@@ -44,6 +44,7 @@ class RollCalculator
         @return_hash[:invalid] << val
       end
     end
+    @return_hash[:valid] << "Confirm Holds"
   end
 
   def calculate_roll
