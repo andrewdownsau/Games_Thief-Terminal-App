@@ -2,8 +2,8 @@
 class UserInterface
   include GameHelper
 
-  attr_writer :instruction, :scoreboard, :dice_results, :prompt, :page_title
-  attr_accessor :prompt_selection, :prompt_response, :player_list
+  attr_writer :instruction, :dice_results, :prompt
+  attr_accessor :prompt_selection, :prompt_response, :player_list, :scoreboard, :page_title
 
   def initialize
     @scoreboard
@@ -66,7 +66,7 @@ class UserInterface
     sections_arr << [@page_title]
     sections_arr << [@scoreboard] if @scoreboard
     sections_arr << [@instruction]
-    sections_arr << [@player_list] unless @player_list == []
+    sections_arr << [@player_list] unless @player_list == [] || @scoreboard
     sections_arr << [@dice_results] if @dice_results
     set_frame_ui(sections_arr)
     set_prompt

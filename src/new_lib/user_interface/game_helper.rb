@@ -9,6 +9,7 @@ module GameHelper
   INSTRUCTION_SETUP_PLAYER << "Player name must be between 3-15 characters long\n"
   INSTRUCTION_SETUP_PLAYER << "Player names cannot be repeated"
   INSTRUCTION_SETUP_CONFIRM = "Player names have all been entered"
+  INSTRUCTION_START_ROUND = "New round, please roll all 5 dice"
 
   #Prompts
   PROMPT_MENU = {
@@ -32,7 +33,14 @@ module GameHelper
     type: "select",
     header: "Would you like to proceed to the game?",
     options: ["Start Game", "Reset settings", "Exit to menu"],
-    values: ["start_game", "new_game", "exit_to_menu"],
+    values: ["start_game", "reset_game", "exit_to_menu"],
     colors: [nil, nil, nil]
+  }
+  PROMPT_ROLL = {
+    type: "select",
+    header: "Roll dice by confirming below:",
+    options: ["Roll dice", "Exit to menu"],
+    values: ["roll_dice", "exit_to_menu"],
+    colors: [nil, nil]
   }
 end
