@@ -54,14 +54,24 @@ class UserPromptRouter
     @return_arr = @previous_arr
   end
 
+  def bust_prompt_router
+    @previous_arr[0] = "\n[#{@user}] New turn, please roll all 5 dice\n\n"
+    @return_arr = @previous_arr
+  end
+
   def resolve_prompt
     case @user_selection.split(" ")[0]
     when 'roll'
-      roll_prompt_router(5) # Dice value currently not used but will deal with later
+      # roll_prompt_router(5) # Dice value currently not used but will deal with later
+      rolloutcome = RollOutcomesRouter.new
+      rolloutcome.route_outcome
+      @return_arr = rolloutcome.rolloutcome_array
     when "hold"
       hold_release_prompt_router(@user_selection, "hold")
     when "release"
       hold_release_prompt_router(@user_selection, "release")
+    when 'bust'
+
     else
       puts "no method here yet"
       gets.chomp

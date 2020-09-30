@@ -11,7 +11,9 @@ require_relative 'game_board'
 require_relative 'game_repository'
 require_relative 'roll_calculator'
 require_relative 'user_prompt_router'
+require_relative 'roll_outcomes_router'
 require_relative 'pot_calculator'
+
 
 class Menu
 

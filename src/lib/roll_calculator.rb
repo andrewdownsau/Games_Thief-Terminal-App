@@ -19,7 +19,7 @@ class RollCalculator
       return nil unless roll == index+1
     end
     @roll_arr = []
-    @return_hash = {valid: [1,2,3,4,5], invalid: []}
+    @return_hash = {valid: ["[1,2,3,4,5]"], invalid: []}
   end
 
   def check_set
@@ -38,13 +38,12 @@ class RollCalculator
   def check_1_5
     # Check for values 1 and 5
     @roll_arr.each do |val| 
-      if val == 5 || val == 1
+      if val == 9 || val == 8
         @return_hash[:valid] << val 
       else
         @return_hash[:invalid] << val
       end
     end
-    @return_hash[:valid] << "Confirm Holds"
   end
 
   def calculate_roll
