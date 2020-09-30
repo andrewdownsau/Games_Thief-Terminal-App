@@ -1,25 +1,22 @@
-# gems
-require 'tty-prompt'
-require 'terminal-table'
-require 'colorize'
-
-# files
-require_relative 'game_helper'
-require_relative 'prompt'
 
 class UserInterface
   include GameHelper
 
+  attr_writer :instruction, :scoreboard, :dice_results, :prompt, :page_title
+  attr_accessor :prompt_selection, :prompt_response, :player_list
+
   def initialize
-    @in_game = false
     @scoreboard
-    @instruction =  INSTRUCTION_MENU
+    @instruction
+    @player_list = []
     @dice_results
-    @prompt = Prompt.new
-    @footer = "Debugging Area"
+    @prompt
+    @prompt_selection = nil
+    @prompt_response = nil
+    @page_title
   end
 
-  def frame(sections_arr)
+  def set_frame_ui(sections_arr)
     system("clear")
     app_frame = Terminal::Table.new do |table|
       table.rows = sections_arr
@@ -35,28 +32,44 @@ class UserInterface
     heading_str << "╱╰╯╰┻┻┻━┻╯╱╱╰┻━┻┻┻┻┻┻━┻━━┻━╯╰━━┻━━┻┻┻┻━╯\n"
   end
 
-  def prompt
-    @prompt.route_out_game unless @in_game
-    PROMPT.select(@prompt.header) do |menu|
-      for i in 0..@prompt.options.length-1 do
-        menu.choice({ 
-          name: @prompt.options[i].colorize(@prompt.colorizes[i]), 
-          value: @prompt.values[i] 
-        })
+  def instruction(added_strings_arr)
+    
+  end
+
+  def set_prompt
+    case @prompt[:type]
+    when "select"
+      @prompt_selection = PROMPT.select(@prompt[:header]) do |menu|
+        for i in 0..@prompt[:options].length-1 do
+          menu.choice({ 
+            name: @prompt[:options][i].colorize(@prompt[:colors][i]), 
+            value: @prompt[:values][i] 
+          })
+        end
+      end
+    when "ask_range"
+      @prompt_response = PROMPT.ask(@prompt[:header]) do |question|
+        question.in @prompt[:input_expected]
+        question.messages[:range?] = @prompt[:error_message]
+      end
+    when "ask_text"
+      @prompt_response = PROMPT.ask(@prompt[:header]) do |question|
+        question.required true
+        question.validate /\A\w+\Z/
+        question.modify  :capitalize
       end
     end
   end
 
-  def run
+  def populate_ui
     sections_arr = [[heading]]
-    sections_arr << [@scoreboard] if @in_game
+    sections_arr << [@page_title]
+    sections_arr << [@scoreboard] if @scoreboard
     sections_arr << [@instruction]
-    sections_arr << [@dice_results] if @in_game
-    sections_arr << [@footer]
-    frame(sections_arr)
-    prompt
+    sections_arr << [@player_list] unless @player_list == []
+    sections_arr << [@dice_results] if @dice_results
+    set_frame_ui(sections_arr)
+    set_prompt
   end
 end
 
-app = UserInterface.new
-app.run
