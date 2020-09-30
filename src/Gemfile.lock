@@ -4,8 +4,17 @@ GEM
     colorize (0.8.1)
     pastel (0.8.0)
       tty-color (~> 0.5)
+    strings (0.2.0)
+      strings-ansi (~> 0.2)
+      unicode-display_width (~> 1.5)
+      unicode_utils (~> 1.4)
+    strings-ansi (0.2.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
+    tty-box (0.6.0)
+      pastel (~> 0.8)
+      strings (~> 0.2.0)
+      tty-cursor (~> 0.7)
     tty-color (0.5.2)
     tty-cursor (0.7.1)
     tty-prompt (0.22.0)
@@ -17,6 +26,7 @@ GEM
       wisper (~> 2.0)
     tty-screen (0.8.1)
     unicode-display_width (1.7.0)
+    unicode_utils (1.4.0)
     wisper (2.0.1)
 
 PLATFORMS
@@ -25,6 +35,7 @@ PLATFORMS
 DEPENDENCIES
   colorize (~> 0.8.1)
   terminal-table (~> 1.8)
+  tty-box (~> 0.6.0)
   tty-prompt
 
 BUNDLED WITH
