@@ -12,7 +12,6 @@ class AppRouter
   include GameHelper
   def initialize
     @main_ui = UserInterface.new
-    @game = Game.new
     @temp_prompt_selection = "0"
     @temp_prompt_response = "0"
   end
@@ -23,11 +22,11 @@ class AppRouter
     @main_ui.instruction =  INSTRUCTION_MENU
     @main_ui.dice_results = nil
     @main_ui.prompt = PROMPT_MENU
-    @game.players = []
     @main_ui.player_list = []
   end
 
   def new_game_setup_0
+    @game = Game.new
     @main_ui.page_title = "Game Setup - Number of Players"
     @main_ui.instruction =  INSTRUCTION_SETUP_NUMBER
     @main_ui.prompt = PROMPT_SETUP_NUMBER
@@ -62,6 +61,7 @@ class AppRouter
   end
 
   def populate_game_details
+    # Scoreboard Values
     for i in 0..@game.number_of_players-1 do
       @main_ui.scoreboard << "#{@game.get_game_value("player_name", i)}: #{@game.get_game_value("player_score", i)} "
       if @game.players[i] == @game.active_player
@@ -69,23 +69,84 @@ class AppRouter
         @main_ui.page_title << "#{@game.get_game_value("player_name", i)}'s turn"
       end
     end
-    @main_ui.dice_results << "\nDice free: "
-    for i in 0..4 do
-      @main_ui.dice_results << @game.get_game_value("die_value", i)
+    # Dice Result Values
+    free_dice_length = @game.get_game_value("free_dice_length", 0)
+    unless free_dice_length == 5
+      for i in 0..5-free_dice_length-1 do
+        @main_ui.dice_results << @game.get_game_value("held_die_value", i)
+      end
     end
+    @main_ui.dice_results << "\nDice free: "
+    for i in 0..free_dice_length-1 do
+      @main_ui.dice_results << @game.get_game_value("free_die_value", i)
+    end
+  end
+
+  def roll_holding_options
+    @main_ui.prompt = {
+      type: "select",
+      header: "Hold at least one value/set and confirm :",
+      options: ["Confirm Holds", "Exit to menu"],
+      values: ["confirm_holds", "exit_to_menu"],
+      colors: [nil, nil]
+    }
+    prompt_values = @game.get_game_value("valid_dice_values", 0)
+    for i in (0..prompt_values.length-1).reverse_each do
+      @main_ui.prompt[:options].unshift(prompt_values[i])
+      @main_ui.prompt[:values].unshift("hold: " + i.to_s)
+      @main_ui.prompt[:colors].unshift(nil)
+    end
+    puts @main_ui.prompt
+    gets
+  end
+  
+  def roll_prompt_result
+    instruction_title = INSTRUCTION_ROLL_OUTCOME
+    instruction_body = ""
+    valid_dice_number = @game.get_game_value("valid_dice_number", 0)
+    case valid_dice_number
+    when 0
+      instruction_body = INSTRUCTION_ROLL_OUTCOME1
+      @main_ui.prompt = PROMPT_BUST
+    when 5
+      instruction_body = INSTRUCTION_ROLL_OUTCOME2
+      @main_ui.prompt = PROMPT_CHAIN
+    else
+      instruction_body = INSTRUCTION_ROLL_OUTCOME3
+      roll_holding_options
+    end
+    player_score_total = @game.get_game_value("pot", 0) + @game.get_game_value("player_score", @game.active_player_index)
+    if player_score_total >= 10000
+      instruction_body = INSTRUCTION_ROLL_OUTCOME4
+      @main_ui.prompt = PROMPT_WIN
+    end
+    @main_ui.instruction = instruction_title + instruction_body
+    active_round_refresh
   end
 
   def roll_free_dice
     @game.game_method("roll")
+    roll_prompt_result
+  end
+
+  def hold_value_selected
+    index = @main_ui.prompt_selection.split[1].to_i
+    @main_ui.prompt[:colors][index] = {background: :green}
+    @game.set_game_value("hold_dice", nil, index)
+    puts "Managed to set hold value at index #{index}"
+    puts @game.get_game_value("held_die_value", 0)
+    gets
     active_round_refresh
   end
 
   def route_prompt_select
-    case @main_ui.prompt_selection
+    prompt_activity = @main_ui.prompt_selection.split[0] if @main_ui.prompt_selection
+    case prompt_activity
       when nil, "exit_to_menu" then start_app
       when "tutorial" then puts "Goes to tutorial page"
       # when "new_game", "reset_game" then new_game_setup_0
       when "new_game" then 
+        @game = Game.new
         @game.set_player("Tom")
         @game.set_player("Dick")
         @game.set_player("Harry")
@@ -95,7 +156,20 @@ class AppRouter
       when "start_game"
         @game.randomize_players
         initiate_round
+      when "start_new_game"
+        @new_game = Game.new
+        @new_game.players = @game.players
+        @new_game.number_of_players = @game.number_of_players
+        @game = @new_game
+        @game.randomize_players
+        initiate_round
       when "roll_dice" then roll_free_dice
+      when "chain_roll_dice"
+        @game.set_game_value("valid_dice_number", 0, nil)
+        roll_free_dice
+      when "hold:"
+        hold_value_selected
+      when "end_round" then initiate_round
       when "exit_app" then exit
     end
     @temp_prompt_selection = @main_ui.prompt_selection
@@ -117,7 +191,7 @@ class AppRouter
 
   def run
     loop do
-      unless @temp_prompt_selection == @main_ui.prompt_selection
+      unless @temp_prompt_selection == @main_ui.prompt_selection && @temp_prompt_selection != "chain_roll_dice"
         route_prompt_select
       end
       unless @temp_prompt_response == @main_ui.prompt_response

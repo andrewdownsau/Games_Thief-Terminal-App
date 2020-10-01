@@ -1,5 +1,5 @@
 class Die
-  attr_accessor :value
+  attr_accessor :value, :held_status
 
   def initialize
     @value = "x"
