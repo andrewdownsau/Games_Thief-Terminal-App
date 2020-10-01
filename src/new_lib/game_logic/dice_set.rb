@@ -1,12 +1,12 @@
 class DiceSet
+  attr_reader :free_dice_set
   def initialize
-    @dice_set = []
-    @free_dice = 5
+    @free_dice_set = []
+    5.times {@free_dice_set << Die.new}
+    @held_dice_set = []
   end
 
-  def roll(number_of_dice)
-    for i in 1..number_of_dice do
-      @dice_set << Die.new(rand(1..6))
-    end
+  def roll
+    @free_dice_set.map{|die| die.value = rand(1..6).to_s}
   end
 end

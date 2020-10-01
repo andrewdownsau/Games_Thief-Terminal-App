@@ -48,12 +48,16 @@ class AppRouter
   end
 
   def initiate_round
-    @main_ui.page_title = "Game active: "
-    @main_ui.scoreboard = "Scores: "
     @main_ui.instruction =  INSTRUCTION_START_ROUND
-    @main_ui.dice_results = "Dice Held: \n"
     @main_ui.prompt = PROMPT_ROLL
     @game.start_round
+    active_round_refresh
+  end
+
+  def active_round_refresh
+    @main_ui.page_title = "Game active: "
+    @main_ui.scoreboard = "Scores: "
+    @main_ui.dice_results = "Dice Held: " 
     populate_game_details
   end
 
@@ -65,14 +69,15 @@ class AppRouter
         @main_ui.page_title << "#{@game.get_game_value("player_name", i)}'s turn"
       end
     end
-    @main_ui.dice_results << "Dice free: "
+    @main_ui.dice_results << "\nDice free: "
     for i in 0..4 do
-      @main_ui.dice_results << "x "
+      @main_ui.dice_results << @game.get_game_value("die_value", i)
     end
   end
 
   def roll_free_dice
-    @game.active_round.dice_set
+    @game.game_method("roll")
+    active_round_refresh
   end
 
   def route_prompt_select

@@ -35,6 +35,19 @@ class Game
       @players.map{|player| player.score}[index]
     when "pot"
       @active_round.pot_total
+    when "die_value"
+      if @active_round.dice_set.free_dice_set == []
+        "x "
+      else
+        @active_round.dice_set.free_dice_set.map{|die| die.value}[index] + " "
+      end
+    end
+  end
+
+  def game_method(method)
+    case method
+    when "roll"
+      @active_round.dice_set.roll
     end
   end
 end

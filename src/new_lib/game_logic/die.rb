@@ -1,6 +1,8 @@
 class Die
-  def initialize(value)
-    @value = value
+  attr_accessor :value
+
+  def initialize
+    @value = "x"
     @held_status = "free"
   end
 
