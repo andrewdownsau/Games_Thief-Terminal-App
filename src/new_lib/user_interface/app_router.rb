@@ -47,24 +47,32 @@ class AppRouter
     @main_ui.prompt = PROMPT_CONFIRM_SETUP
   end
 
-  def initiate_game
+  def initiate_round
     @main_ui.page_title = "Game active: "
     @main_ui.scoreboard = "Scores: "
     @main_ui.instruction =  INSTRUCTION_START_ROUND
-    @main_ui.dice_results = "Dice Results: "
+    @main_ui.dice_results = "Dice Held: \n"
     @main_ui.prompt = PROMPT_ROLL
-    @game.randomize_players
-    populate_game
+    @game.start_round
+    populate_game_details
   end
 
-  def populate_game
+  def populate_game_details
     for i in 0..@game.number_of_players-1 do
-      @main_ui.scoreboard << "#{@game.players.map{|player| player.name}[i]}: #{@game.players.map{|player| player.score}[i]} "
+      @main_ui.scoreboard << "#{@game.get_game_value("player_name", i)}: #{@game.get_game_value("player_score", i)} "
       if @game.players[i] == @game.active_player
-        @main_ui.scoreboard << "+ [0] " 
-        @main_ui.page_title << "#{@game.players.map{|player| player.name}[i]}'s turn"
+        @main_ui.scoreboard << "+ [#{@game.get_game_value("pot", 0)}] " 
+        @main_ui.page_title << "#{@game.get_game_value("player_name", i)}'s turn"
       end
     end
+    @main_ui.dice_results << "Dice free: "
+    for i in 0..4 do
+      @main_ui.dice_results << "x "
+    end
+  end
+
+  def roll_free_dice
+    @game.active_round.dice_set
   end
 
   def route_prompt_select
@@ -77,8 +85,12 @@ class AppRouter
         @game.set_player("Dick")
         @game.set_player("Harry")
         @game.number_of_players = 3
-        initiate_game
-      when "start_game" then initiate_game
+        @game.randomize_players
+        initiate_round
+      when "start_game"
+        @game.randomize_players
+        initiate_round
+      when "roll_dice" then roll_free_dice
       when "exit_app" then exit
     end
     @temp_prompt_selection = @main_ui.prompt_selection
