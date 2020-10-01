@@ -1,7 +1,6 @@
 # files
 require_relative 'player'
 require_relative 'round'
-require_relative 'dice_set'
 require_relative 'die'
 
 class Game
@@ -36,18 +35,14 @@ class Game
     when "pot"
       @active_round.pot_total
     when "die_value"
-      if @active_round.dice_set.free_dice_set == []
-        "x "
-      else
-        @active_round.dice_set.free_dice_set.map{|die| die.value}[index] + " "
-      end
+      @active_round.free_dice_set.map{|die| die.value}[index] + " "
     end
   end
 
   def game_method(method)
     case method
     when "roll"
-      @active_round.dice_set.roll
+      @active_round.roll
     end
   end
 end
