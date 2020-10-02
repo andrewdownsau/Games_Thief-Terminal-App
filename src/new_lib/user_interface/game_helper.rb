@@ -74,11 +74,5 @@ module GameHelper
     values: ["start_new_game", "exit_to_menu"],
     colors: [nil, nil]
   }.freeze
-  PROMPT_HOLD = {
-    type: "select",
-    header: "Hold at least one value/set and confirm :",
-    options: ["Confirm Holds", "Exit to menu"],
-    values: ["confirm_holds", "exit_to_menu"],
-    colors: [nil, nil]
-  }.freeze
+  
 end

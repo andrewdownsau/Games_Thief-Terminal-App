@@ -1,77 +1,86 @@
 class Round
-  attr_accessor :pot_total, :rolled_dice_set, :held_dice_set, :free_dice_set, :dice_value_scores, :valid_dice_set, :valid_dice_number
+  attr_accessor :pot_total, :dice_set, :valid_dice_options
 
   def initialize
     @pot_total = 0
-    @free_dice_set = []
-    @rolled_dice_set = []
-    5.times {@free_dice_set << Die.new}
-    @held_dice_set = []
-    @valid_dice_set = []
-    @dice_value_arr = []
-    @dice_value_scores = []
-    @valid_dice_number = 0
+    @dice_set = []
+    5.times {@dice_set << Die.new}
+    @dice_value_arr
+    @valid_dice_options = { prompt: [], die: [], score: [], dice_number: 0 }
   end
 
   def check_straight
     # Checks for straight output [1, 2, 3, 4 ,5]
     sorted_roll = @dice_value_arr.sort
     sorted_roll.each_with_index do |roll,index|
-      return nil unless roll == index+1
+      return nil unless roll == (index+1).to_s
     end
-    @valid_dice_set = "[1, 2, 3, 4 ,5]"
-    @rolled_dice_set = @free_dice_set
-    @dice_value_scores << 2500
-    @valid_dice_number = 5
+    @valid_dice_options[:die] = [@dice_set]
+    @valid_dice_options[:score] << 2500
+    @valid_dice_options[:dice_number] = 5
     @dice_value_arr = []
   end
 
   def check_set
     # Checks for set of 3, 4 or 5 values
-    set = []
+    valid_set_prompt = []
+    valid_set_die = []
+    valid_set_score = 100
+    val_counter = 0
     @dice_value_arr.each do |val| 
       val_counter = @dice_value_arr.count(val)
       if val_counter > 2
-        @valid_dice_number += val_counter
-        base_multiplier = 100
-        base_multiplier = 1000 if val == "1"
-        @dice_value_scores << val.to_i * base_multiplier * 2**(val_counter-3)
-        val_counter.times {set << val.to_i}
-        @rolled_dice_set << @free_dice_set.map{|die| die if die.value == val}
+        val_counter.times {valid_set_prompt << val.to_i}
+        valid_set_die << @dice_set.select{|die| die.value == val}
+        valid_set_score *= val.to_i * 2**(val_counter-3)
+        valid_set_score *= 10 if val == "1" 
         @dice_value_arr.delete(val)
         break
       end
     end
-    @valid_dice_set << set.to_s unless set == []
+    unless valid_set_prompt == []
+      @valid_dice_options[:prompt] << valid_set_prompt.to_s
+      @valid_dice_options[:die] << valid_set_die 
+      @valid_dice_options[:score] << valid_set_score
+      @valid_dice_options[:dice_number] += val_counter
+    end
   end
 
   def check_1_5
     # Check for values 1 and 5
     @dice_value_arr.each do |val| 
+      val_counter = @dice_value_arr.count(val)
+      val_score = 50
+      val_score *= 2 if val == "1"
       if val == "1" || val == "5"
-        @valid_dice_number += 1
-        base_multiplier = 10
-        base_multiplier = 100 if val == "1"
-        @dice_value_scores << val.to_i * base_multiplier
-        @valid_dice_set << val
-        @rolled_dice_set << @free_dice_set.map{|die| die if die.value == val}
+        val_counter.times { 
+          @valid_dice_options[:prompt] << val 
+          @valid_dice_options[:score] << val_score
+          @valid_dice_options[:dice_number] += 1
+        }
+        @valid_dice_options[:die] << @dice_set.select{|die| die.value == val}
+        @dice_value_arr.delete(val)
       end
     end
-    @dice_value_arr.each do |val| 
-      unless val == "1" || val == "5"
-        @rolled_dice_set << @free_dice_set.map{|die| die if die.value == val}
-      end
-    end
-    @dice_value_scores.each { |a| @pot_total+=a } if @valid_dice_number == 5
   end
 
-  def roll
-    @dice_value_arr = @free_dice_set.map{|die| die.value = rand(1..6).to_s}.sort
-    @free_dice_set = @free_dice_set.sort_by{ |die| die.value }
+  def set_valid_dice_options
     check_straight
     check_set
     check_1_5
-    p @rolled_dice_set
+    if @valid_dice_options[:dice_number] == 5
+      @pot_total = @valid_dice_options[:score].inject(0, :+)
+    end
+  end
+
+  def roll
+    @dice_value_arr = @dice_set.map{|die| die.value = rand(1..6).to_s if die.held_status == "free"}
+    # @dice_value_arr = ["1", "2", "4", "5", "3"]
+    @valid_dice_options[:dice_number] = 0 if @valid_dice_options[:dice_number] == 5
+    p @dice_value_arr
+    gets
+    set_valid_dice_options
+    p @valid_dice_options
     gets
   end
 end

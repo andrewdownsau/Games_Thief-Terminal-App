@@ -9,7 +9,7 @@ class UserInterface
     @scoreboard
     @instruction
     @player_list = []
-    @dice_results
+    @dice_results = []
     @prompt
     @prompt_selection = nil
     @prompt_response = nil
@@ -67,7 +67,7 @@ class UserInterface
     sections_arr << [@scoreboard] if @scoreboard
     sections_arr << [@instruction]
     sections_arr << [@player_list] unless @player_list == [] || @scoreboard
-    sections_arr << [@dice_results] if @dice_results
+    sections_arr << [@dice_results[0] + @dice_results[1]] unless @dice_results == []
     set_frame_ui(sections_arr)
     set_prompt
   end

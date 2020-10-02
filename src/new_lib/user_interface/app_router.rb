@@ -20,7 +20,7 @@ class AppRouter
     @main_ui.page_title = "Main Menu"
     @main_ui.scoreboard = nil
     @main_ui.instruction =  INSTRUCTION_MENU
-    @main_ui.dice_results = nil
+    @main_ui.dice_results = []
     @main_ui.prompt = PROMPT_MENU
     @main_ui.player_list = []
   end
@@ -56,7 +56,8 @@ class AppRouter
   def active_round_refresh
     @main_ui.page_title = "Game active: "
     @main_ui.scoreboard = "Scores: "
-    @main_ui.dice_results = "Dice Held: " 
+    @main_ui.dice_results[0] = "Dice Held: " 
+    @main_ui.dice_results[1] = "\nDice Free: " 
     populate_game_details
   end
 
@@ -70,16 +71,8 @@ class AppRouter
       end
     end
     # Dice Result Values
-    free_dice_length = @game.get_game_value("free_dice_length", 0)
-    unless free_dice_length == 5
-      for i in 0..5-free_dice_length-1 do
-        @main_ui.dice_results << @game.get_game_value("held_die_value", i)
-      end
-    end
-    @main_ui.dice_results << "\nDice free: "
-    for i in 0..free_dice_length-1 do
-      @main_ui.dice_results << @game.get_game_value("free_die_value", i)
-    end
+    @main_ui.dice_results[0] << @game.get_game_value("dice_set_held", nil)
+    @main_ui.dice_results[1] << @game.get_game_value("dice_set_free", nil)
   end
 
   def roll_holding_options
@@ -90,7 +83,7 @@ class AppRouter
       values: ["confirm_holds", "exit_to_menu"],
       colors: [nil, nil]
     }
-    prompt_values = @game.get_game_value("valid_dice_values", 0)
+    prompt_values = @game.get_game_value("valid_dice_values", nil)
     for i in (0..prompt_values.length-1).reverse_each do
       @main_ui.prompt[:options].unshift(prompt_values[i])
       @main_ui.prompt[:values].unshift("hold: " + i.to_s)
@@ -103,8 +96,7 @@ class AppRouter
   def roll_prompt_result
     instruction_title = INSTRUCTION_ROLL_OUTCOME
     instruction_body = ""
-    valid_dice_number = @game.get_game_value("valid_dice_number", 0)
-    case valid_dice_number
+    case @game.get_game_value("valid_dice_options_dice_number", nil)
     when 0
       instruction_body = INSTRUCTION_ROLL_OUTCOME1
       @main_ui.prompt = PROMPT_BUST
@@ -165,7 +157,6 @@ class AppRouter
         initiate_round
       when "roll_dice" then roll_free_dice
       when "chain_roll_dice"
-        @game.set_game_value("valid_dice_number", 0, nil)
         roll_free_dice
       when "hold:"
         hold_value_selected
