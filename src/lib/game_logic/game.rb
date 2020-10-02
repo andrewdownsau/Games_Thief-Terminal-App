@@ -47,6 +47,10 @@ class Game
       @active_round.dice_set.map{|die| @output_string << die.value + " " if die.held_status == "held" }
     when "valid_dice_options_dice_number"
       @output_string = @active_round.valid_dice_options[:dice_number]
+    when "free_dice_number"
+      @active_round.dice_set.count(:held_status == "free")
+      @output_string = 0
+      @active_round.dice_set.map{|die| @output_string += 1 if die.held_status == "free" }
     end
     @output_string
   end
@@ -78,6 +82,10 @@ class Game
       @active_round.update_pot(index, amount)
       # puts @active_round.valid_dice_options
       # gets
+    when "free_all_dice"
+      @active_round.dice_set.map do |die|
+        die.held_status = "free"
+      end
     end
   end
 

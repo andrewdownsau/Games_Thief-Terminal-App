@@ -21,6 +21,10 @@ module GameHelper
   INSTRUCTION_ROLL_OUTCOME4 = "\nCongrats XD! You won the game!\n"
   INSTRUCTION_ROLL_OUTCOME4 << "Please select to start a new game or exit"
   INSTRUCTION_HOLD_ERROR = "\nError: Please hold at least one dice value"
+  INSTRUCTION_TURN_OPTIONS = "Dice have been confirmed as held\n"
+  INSTRUCTION_TURN_OPTIONS << "Now you must decide to pass or continue rolling\n\n"
+  INSTRUCTION_TURN_OPTIONS << "If you pass the next player could steal your turn\n"
+  INSTRUCTION_TURN_OPTIONS << "If you continue you could bust your next roll\n"
 
   #Prompts
   PROMPT_MENU = {
@@ -75,5 +79,11 @@ module GameHelper
     values: ["start_new_game", "exit_to_menu"],
     colors: [nil, nil]
   }.freeze
-  
+  PROMPT_TURN_OPTIONS = {
+    type: "select",
+    header: "Confirm to pass or continue:",
+    options: ["Pass to next player", "Continue & reroll", "Exit to menu"],
+    values: ["pass_turn", "roll_dice", "exit_to_menu"],
+    colors: [nil, nil]
+  }
 end

@@ -117,11 +117,12 @@ class AppRouter
   def roll_prompt_result
     instruction_title = INSTRUCTION_ROLL_OUTCOME
     instruction_body = ""
+    free_dice_number = @game.get_game_value("free_dice_number", nil)
     case @game.get_game_value("valid_dice_options_dice_number", nil)
     when 0
       instruction_body = INSTRUCTION_ROLL_OUTCOME1
       @main_ui.prompt = PROMPT_BUST
-    when 5
+    when free_dice_number
       instruction_body = INSTRUCTION_ROLL_OUTCOME2
       @main_ui.prompt = PROMPT_CHAIN
     else
@@ -139,7 +140,13 @@ class AppRouter
 
   def roll_free_dice
     @game.game_method("roll")
+    @held_selection_count = 0
     roll_prompt_result
+  end
+
+  def chain_roll_dice
+    @game.set_game_value("free_all_dice", nil, nil)
+    roll_free_dice
   end
 
   def hold_value_selected
@@ -163,7 +170,8 @@ class AppRouter
   def confirm_holds
     # Check if there is at least one option that has been selected
     if @held_selection_count > 0
-      # Do Stuff
+      @main_ui.instruction = INSTRUCTION_TURN_OPTIONS
+      @main_ui.prompt = PROMPT_TURN_OPTIONS
     else
       @main_ui.instruction = INSTRUCTION_ROLL_OUTCOME + INSTRUCTION_ROLL_OUTCOME3 + INSTRUCTION_HOLD_ERROR
     end
@@ -178,7 +186,8 @@ class AppRouter
       when "new_game" then start_game
       when "start_game" then start_game
       when "start_new_game" then restart_game
-      when "roll_dice", "chain_roll_dice" then roll_free_dice
+      when "roll_dice" then roll_free_dice
+      when "chain_roll_dice" then chain_roll_dice
       when "hold:" then hold_value_selected
       when "free:" then free_value_selected
       when "confirm_holds" then confirm_holds

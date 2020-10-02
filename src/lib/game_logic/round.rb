@@ -7,6 +7,7 @@ class Round
     5.times {@dice_set << Die.new}
     @dice_value_arr
     @valid_dice_options = { prompt: [], die: [], score: [], dice_number: 0 }
+    @free_dice_number = 5
   end
 
   def check_straight
@@ -62,8 +63,8 @@ class Round
           @valid_dice_options[:dice_number] += 1
         }
         val_selection_arr = @dice_set.select{|die| die.value == val}
-        for i in 0..val_selection_arr.length do
-          @valid_dice_options[:die] << val_selection_arr[i] if val_selection_arr[i]
+        for i in 0..val_selection_arr.length-1 do
+          @valid_dice_options[:die] << val_selection_arr[i] if val_selection_arr[i].held_status == "free"
         end
         @dice_value_arr.delete(val)
       end
@@ -71,10 +72,13 @@ class Round
   end
 
   def set_valid_dice_options
+    @free_dice_number = 0
+    @dice_set.map{|die| @free_dice_number += 1 if die.held_status == "free" }
     check_straight
     check_set
     check_1_5
-    if @valid_dice_options[:dice_number] == 5
+
+    if @valid_dice_options[:dice_number] == @free_dice_number
       @pot_total += @valid_dice_options[:score].inject(0, :+)
     end
   end
@@ -86,11 +90,10 @@ class Round
 
   def roll
     @dice_value_arr = @dice_set.map{|die| die.value = rand(1..6).to_s if die.held_status == "free"}
+    @dice_value_arr.delete(nil)
     # @dice_value_arr = @dice_set.each_with_index.map{|die,i| die.value = (i+1).to_s }
     # @dice_value_arr = @dice_set.each_with_index.map{|die,i| i < 3 ? die.value = 1.to_s : die.value = 2.to_s }
-    if @valid_dice_options[:dice_number] == 5
-      @valid_dice_options = { prompt: [], die: [], score: [], dice_number: 0 }
-    end
+    @valid_dice_options = { prompt: [], die: [], score: [], dice_number: 0 }
     p @dice_value_arr
     gets
     set_valid_dice_options
