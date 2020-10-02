@@ -25,6 +25,9 @@ module GameHelper
   INSTRUCTION_TURN_OPTIONS << "Now you must decide to pass or continue rolling\n\n"
   INSTRUCTION_TURN_OPTIONS << "If you pass the next player could steal your turn\n"
   INSTRUCTION_TURN_OPTIONS << "If you continue you could bust your next roll\n"
+  INSTRUCTION_STEAL_TURN = "Next player in sequence: you have the option to steal!\n\n"
+  INSTRUCTION_STEAL_TURN << "You can take over the current player's turn as if it were your own\n"
+  INSTRUCTION_STEAL_TURN << "Otherwise start a new round and the pot is added to last player's score"
 
   #Prompts
   PROMPT_MENU = {
@@ -62,7 +65,7 @@ module GameHelper
     type: "select",
     header: "Confirm end of round:",
     options: ["End round", "Exit to menu"],
-    values: ["end_round", "exit_to_menu"],
+    values: ["bust_round", "exit_to_menu"],
     colors: [nil, nil]
   }.freeze
   PROMPT_CHAIN = {
@@ -84,6 +87,13 @@ module GameHelper
     header: "Confirm to pass or continue:",
     options: ["Pass to next player", "Continue & reroll", "Exit to menu"],
     values: ["pass_turn", "roll_dice", "exit_to_menu"],
+    colors: [nil, nil]
+  }
+  PROMPT_STEAL_TURN = {
+    type: "select",
+    header: "Confirm to steal this player's turn:",
+    options: ["Steal turn and roll", "Start new round", "Exit to menu"],
+    values: ["steal_turn", "new_round", "exit_to_menu"],
     colors: [nil, nil]
   }
 end

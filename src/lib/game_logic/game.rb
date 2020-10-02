@@ -23,12 +23,19 @@ class Game
     @players << Player.new(player_name)
   end
 
-  def start_round
+  def move_to_next_player
     @active_player_index += 1
     if @active_player == nil || @active_player_index == @number_of_players
       @active_player_index = 0 
     end
     @active_player = @players[@active_player_index]
+  end
+
+  def start_round(status)
+    if status == "new"
+      @active_player.score += @active_round.pot_total
+    end
+    move_to_next_player
     @active_round = Round.new
   end
 
@@ -80,8 +87,6 @@ class Game
         end
       end
       @active_round.update_pot(index, amount)
-      # puts @active_round.valid_dice_options
-      # gets
     when "free_all_dice"
       @active_round.dice_set.map do |die|
         die.held_status = "free"

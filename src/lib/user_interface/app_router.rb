@@ -47,10 +47,10 @@ class AppRouter
     @main_ui.prompt = PROMPT_CONFIRM_SETUP
   end
 
-  def initiate_round
+  def initiate_round(status)
     @main_ui.instruction =  INSTRUCTION_START_ROUND
     @main_ui.prompt = PROMPT_ROLL
-    @game.start_round
+    @game.start_round(status)
     active_round_refresh
   end
 
@@ -62,7 +62,7 @@ class AppRouter
     @game.set_player("Harry")
     @game.number_of_players = 3
     @game.randomize_players
-    initiate_round
+    initiate_round("begin")
   end
 
   def restart_game
@@ -71,7 +71,7 @@ class AppRouter
     @new_game.number_of_players = @game.number_of_players
     @game = @new_game
     @game.randomize_players
-    initiate_round
+    initiate_round("begin")
   end
 
   def active_round_refresh
@@ -110,8 +110,6 @@ class AppRouter
       @main_ui.prompt[:values].unshift("hold: " + i.to_s)
       @main_ui.prompt[:colors].unshift(nil)
     end
-    puts @main_ui.prompt
-    gets
   end
   
   def roll_prompt_result
@@ -177,6 +175,17 @@ class AppRouter
     end
   end
 
+  def pass_turn
+    # Passing turn gives option for next player to steal turn
+    @main_ui.instruction = INSTRUCTION_STEAL_TURN
+    @main_ui.prompt = PROMPT_STEAL_TURN
+  end
+
+  def steal_turn
+    @game.move_to_next_player
+    roll_free_dice
+  end
+
   def route_prompt_select
     prompt_activity = @main_ui.prompt_selection.split[0] if @main_ui.prompt_selection
     case prompt_activity
@@ -191,7 +200,10 @@ class AppRouter
       when "hold:" then hold_value_selected
       when "free:" then free_value_selected
       when "confirm_holds" then confirm_holds
-      when "end_round" then initiate_round
+      when "pass_turn" then pass_turn
+      when "steal_turn" then steal_turn
+      when "new_round" then initiate_round("new")
+      when "bust_round" then initiate_round("bust")
       when "exit_app" then exit
     end
     @temp_prompt_selection = @main_ui.prompt_selection
