@@ -47,8 +47,6 @@ class Game
       @active_round.dice_set.map{|die| @output_string << die.value + " " if die.held_status == "held" }
     when "valid_dice_options_dice_number"
       @output_string = @active_round.valid_dice_options[:dice_number]
-    when "valid_dice_options"
-      @active_round.valid_dice_options
 
     # when "valid_dice_values"
     #   @active_round.valid_dice_set
@@ -60,22 +58,38 @@ class Game
     @output_string
   end
 
-  # def set_game_value(value, amount, index)
-  #   case value
-  #   when "valid_dice_number"
-  #     @active_round.valid_dice_number = amount
-  #   when "hold_dice"
-  #     @active_round.held_dice_set << @active_round.free_dice_set[index]
-  #     p @active_round.held_dice_set
-  #     gets
-  #     @active_round.free_dice_set.delete_at(index)
-  #   end
-  # end
+  def get_game_array(arr)
+    case arr
+    when "valid_dice_options_prompts"
+      @active_round.valid_dice_options[:prompt]
+    end
+  end
+
+  def set_game_value(value, amount, index)
+    case value
+    when "hold_free_dice"
+      prompt_selction = @active_round.valid_dice_options[:die][index]
+      @active_round.dice_set.map do |die|
+        if prompt_selction.kind_of?(Array)
+          for i in 0..prompt_selction.length do
+            if die == prompt_selction[i]
+              die.held_status = amount
+            end
+          end
+        end
+        if die == prompt_selction
+          die.held_status = amount
+          break
+        end
+      end
+      @active_round.update_pot(index, amount)
+      puts @active_round.valid_dice_options
+      gets
+    end
+  end
 
   # def set_game_value(value, amount, index)
   #   case value
-  #   when "valid_dice_number"
-  #     @active_round.valid_dice_number = amount
   #   when "hold_dice"
   #     @active_round.held_dice_set << @active_round.free_dice_set[index]
   #     p @active_round.held_dice_set

@@ -83,7 +83,7 @@ class AppRouter
       values: ["confirm_holds", "exit_to_menu"],
       colors: [nil, nil]
     }
-    prompt_values = @game.get_game_value("valid_dice_values", nil)
+    prompt_values = @game.get_game_array("valid_dice_options_prompts")
     for i in (0..prompt_values.length-1).reverse_each do
       @main_ui.prompt[:options].unshift(prompt_values[i])
       @main_ui.prompt[:values].unshift("hold: " + i.to_s)
@@ -123,11 +123,17 @@ class AppRouter
 
   def hold_value_selected
     index = @main_ui.prompt_selection.split[1].to_i
+    @main_ui.prompt[:values][index] = "free: " + index.to_s
     @main_ui.prompt[:colors][index] = {background: :green}
-    @game.set_game_value("hold_dice", nil, index)
-    puts "Managed to set hold value at index #{index}"
-    puts @game.get_game_value("held_die_value", 0)
-    gets
+    @game.set_game_value("hold_free_dice", "held", index)
+    active_round_refresh
+  end
+
+  def free_value_selected
+    index = @main_ui.prompt_selection.split[1].to_i
+    @main_ui.prompt[:values][index] = "hold: " + index.to_s
+    @main_ui.prompt[:colors][index] = nil
+    @game.set_game_value("hold_free_dice", "free", index)
     active_round_refresh
   end
 
@@ -160,6 +166,8 @@ class AppRouter
         roll_free_dice
       when "hold:"
         hold_value_selected
+      when "free:"
+        free_value_selected
       when "end_round" then initiate_round
       when "exit_app" then exit
     end

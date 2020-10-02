@@ -40,7 +40,10 @@ class Round
     end
     unless valid_set_prompt == []
       @valid_dice_options[:prompt] << valid_set_prompt.to_s
-      @valid_dice_options[:die] << valid_set_die 
+      # @valid_dice_options[:die] << valid_set_die 
+      for i in 0..valid_set_die.length do
+        @valid_dice_options[:die] << valid_set_die[i] if valid_set_die[i]
+      end
       @valid_dice_options[:score] << valid_set_score
       @valid_dice_options[:dice_number] += val_counter
     end
@@ -48,7 +51,7 @@ class Round
 
   def check_1_5
     # Check for values 1 and 5
-    @dice_value_arr.each do |val| 
+    @dice_value_arr.cycle(2) do |val| 
       val_counter = @dice_value_arr.count(val)
       val_score = 50
       val_score *= 2 if val == "1"
@@ -58,7 +61,11 @@ class Round
           @valid_dice_options[:score] << val_score
           @valid_dice_options[:dice_number] += 1
         }
-        @valid_dice_options[:die] << @dice_set.select{|die| die.value == val}
+        val_selection_arr = @dice_set.select{|die| die.value == val}
+        for i in 0..val_selection_arr.length do
+          @valid_dice_options[:die] << val_selection_arr[i] if val_selection_arr[i]
+        end
+        @dice_value_arr.delete(val)
       end
     end
   end
@@ -68,14 +75,22 @@ class Round
     check_set
     check_1_5
     if @valid_dice_options[:dice_number] == 5
-      @pot_total = @valid_dice_options[:score].inject(0, :+)
+      @pot_total += @valid_dice_options[:score].inject(0, :+)
     end
+  end
+
+  def update_pot(index, amount)
+    @pot_total += @valid_dice_options[:score][index] if amount == "held"
+    @pot_total -= @valid_dice_options[:score][index] if amount == "free"
   end
 
   def roll
     @dice_value_arr = @dice_set.map{|die| die.value = rand(1..6).to_s if die.held_status == "free"}
-    # @dice_value_arr = ["5", "1", "4", "4", "4"]
-    @valid_dice_options[:dice_number] = 0 if @valid_dice_options[:dice_number] == 5
+    # @dice_value_arr = @dice_set.each_with_index.map{|die,i| die.value = (i+1).to_s }
+    # @dice_value_arr = @dice_set.each_with_index.map{|die,i| i < 3 ? die.value = 1.to_s : die.value = 2.to_s }
+    if @valid_dice_options[:dice_number] == 5
+      @valid_dice_options = { prompt: [], die: [], score: [], dice_number: 0 }
+    end
     p @dice_value_arr
     gets
     set_valid_dice_options
