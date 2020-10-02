@@ -59,7 +59,6 @@ class Round
           @valid_dice_options[:dice_number] += 1
         }
         @valid_dice_options[:die] << @dice_set.select{|die| die.value == val}
-        @dice_value_arr.delete(val)
       end
     end
   end
@@ -75,7 +74,7 @@ class Round
 
   def roll
     @dice_value_arr = @dice_set.map{|die| die.value = rand(1..6).to_s if die.held_status == "free"}
-    # @dice_value_arr = ["1", "2", "4", "5", "3"]
+    # @dice_value_arr = ["5", "1", "4", "4", "4"]
     @valid_dice_options[:dice_number] = 0 if @valid_dice_options[:dice_number] == 5
     p @dice_value_arr
     gets
