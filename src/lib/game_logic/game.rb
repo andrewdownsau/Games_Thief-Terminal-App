@@ -47,13 +47,6 @@ class Game
       @active_round.dice_set.map{|die| @output_string << die.value + " " if die.held_status == "held" }
     when "valid_dice_options_dice_number"
       @output_string = @active_round.valid_dice_options[:dice_number]
-
-    # when "valid_dice_values"
-    #   @active_round.valid_dice_set
-    # when "valid_dice_number"
-    #   @active_round.valid_dice_number
-    # when "dice_value_scores"
-    #   @active_round.dice_value_scores
     end
     @output_string
   end
@@ -83,20 +76,10 @@ class Game
         end
       end
       @active_round.update_pot(index, amount)
-      puts @active_round.valid_dice_options
-      gets
+      # puts @active_round.valid_dice_options
+      # gets
     end
   end
-
-  # def set_game_value(value, amount, index)
-  #   case value
-  #   when "hold_dice"
-  #     @active_round.held_dice_set << @active_round.free_dice_set[index]
-  #     p @active_round.held_dice_set
-  #     gets
-  #     @active_round.free_dice_set.delete_at(index)
-  #   end
-  # end
 
   def game_method(method)
     case method

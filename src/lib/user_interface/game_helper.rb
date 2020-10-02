@@ -20,6 +20,7 @@ module GameHelper
   INSTRUCTION_ROLL_OUTCOME3 << "Please select which values to hold, then confirm"
   INSTRUCTION_ROLL_OUTCOME4 = "\nCongrats XD! You won the game!\n"
   INSTRUCTION_ROLL_OUTCOME4 << "Please select to start a new game or exit"
+  INSTRUCTION_HOLD_ERROR = "\nError: Please hold at least one dice value"
 
   #Prompts
   PROMPT_MENU = {

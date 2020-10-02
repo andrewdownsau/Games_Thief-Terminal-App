@@ -14,6 +14,7 @@ class AppRouter
     @main_ui = UserInterface.new
     @temp_prompt_selection = "0"
     @temp_prompt_response = "0"
+    @held_selection_count = 0
   end
 
   def start_app
@@ -51,6 +52,26 @@ class AppRouter
     @main_ui.prompt = PROMPT_ROLL
     @game.start_round
     active_round_refresh
+  end
+
+  def start_game
+    # Currently set to skip setting options
+    @game = Game.new
+    @game.set_player("Tom")
+    @game.set_player("Dick")
+    @game.set_player("Harry")
+    @game.number_of_players = 3
+    @game.randomize_players
+    initiate_round
+  end
+
+  def restart_game
+    @new_game = Game.new
+    @new_game.players = @game.players
+    @new_game.number_of_players = @game.number_of_players
+    @game = @new_game
+    @game.randomize_players
+    initiate_round
   end
 
   def active_round_refresh
@@ -126,6 +147,7 @@ class AppRouter
     @main_ui.prompt[:values][index] = "free: " + index.to_s
     @main_ui.prompt[:colors][index] = {background: :green}
     @game.set_game_value("hold_free_dice", "held", index)
+    @held_selection_count += 1
     active_round_refresh
   end
 
@@ -134,7 +156,17 @@ class AppRouter
     @main_ui.prompt[:values][index] = "hold: " + index.to_s
     @main_ui.prompt[:colors][index] = nil
     @game.set_game_value("hold_free_dice", "free", index)
+    @held_selection_count -= 1
     active_round_refresh
+  end
+
+  def confirm_holds
+    # Check if there is at least one option that has been selected
+    if @held_selection_count > 0
+      # Do Stuff
+    else
+      @main_ui.instruction = INSTRUCTION_ROLL_OUTCOME + INSTRUCTION_ROLL_OUTCOME3 + INSTRUCTION_HOLD_ERROR
+    end
   end
 
   def route_prompt_select
@@ -143,31 +175,13 @@ class AppRouter
       when nil, "exit_to_menu" then start_app
       when "tutorial" then puts "Goes to tutorial page"
       # when "new_game", "reset_game" then new_game_setup_0
-      when "new_game" then 
-        @game = Game.new
-        @game.set_player("Tom")
-        @game.set_player("Dick")
-        @game.set_player("Harry")
-        @game.number_of_players = 3
-        @game.randomize_players
-        initiate_round
-      when "start_game"
-        @game.randomize_players
-        initiate_round
-      when "start_new_game"
-        @new_game = Game.new
-        @new_game.players = @game.players
-        @new_game.number_of_players = @game.number_of_players
-        @game = @new_game
-        @game.randomize_players
-        initiate_round
-      when "roll_dice" then roll_free_dice
-      when "chain_roll_dice"
-        roll_free_dice
-      when "hold:"
-        hold_value_selected
-      when "free:"
-        free_value_selected
+      when "new_game" then start_game
+      when "start_game" then start_game
+      when "start_new_game" then restart_game
+      when "roll_dice", "chain_roll_dice" then roll_free_dice
+      when "hold:" then hold_value_selected
+      when "free:" then free_value_selected
+      when "confirm_holds" then confirm_holds
       when "end_round" then initiate_round
       when "exit_app" then exit
     end
@@ -190,6 +204,7 @@ class AppRouter
 
   def run
     loop do
+      # Don't allow for repeat prompts unless it is to chain roll
       unless @temp_prompt_selection == @main_ui.prompt_selection && @temp_prompt_selection != "chain_roll_dice"
         route_prompt_select
       end

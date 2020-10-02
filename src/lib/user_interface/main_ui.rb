@@ -2,8 +2,7 @@
 class UserInterface
   include GameHelper
 
-  attr_writer :instruction
-  attr_accessor :prompt, :prompt_selection, :prompt_response, :player_list, :scoreboard, :dice_results, :page_title
+  attr_accessor :instruction, :prompt, :prompt_selection, :prompt_response, :player_list, :scoreboard, :dice_results, :page_title
 
   def initialize
     @scoreboard
