@@ -1,4 +1,4 @@
-module OptionsRollOutcome
+module RollOutcome
   include GameHelper
   
   def roll_holding_options

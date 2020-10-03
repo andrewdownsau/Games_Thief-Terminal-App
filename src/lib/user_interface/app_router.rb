@@ -5,17 +5,17 @@ require 'colorize'
 
 # files
 require_relative 'game_helper'
-require_relative 'options_general_game'
-require_relative 'options_setting_game'
-require_relative 'options_roll_outcome'
+require_relative '../controllers/general_game'
+require_relative '../controllers/game_setup'
+require_relative '../controllers/roll_outcome'
 require_relative 'main_ui'
 require_relative '../game_logic/game'
 
 class AppRouter
   include GameHelper
-  include OptionsGeneralGame
-  include OptionsSettingGame
-  include OptionsRollOutcome
+  include GeneralGame
+  include GameSetup
+  include RollOutcome
 
   def initialize
     @main_ui = UserInterface.new

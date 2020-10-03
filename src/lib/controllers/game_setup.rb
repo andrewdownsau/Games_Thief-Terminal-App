@@ -1,4 +1,4 @@
-module OptionsSettingGame
+module GameSetup
   include GameHelper
   def new_game_setup_0
     @game = Game.new

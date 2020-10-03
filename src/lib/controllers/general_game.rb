@@ -1,4 +1,4 @@
-module OptionsGeneralGame
+module GeneralGame
   include GameHelper
 
   def start_app
