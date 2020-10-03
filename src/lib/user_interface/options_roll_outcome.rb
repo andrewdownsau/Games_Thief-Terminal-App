@@ -2,6 +2,7 @@ module OptionsRollOutcome
   include GameHelper
   
   def roll_holding_options
+    # Roll prompt is written each time to avoid accumulated options when adding
     @main_ui.prompt = {
       type: "select",
       header: "Hold at least one value/set and confirm :",

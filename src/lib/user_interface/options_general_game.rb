@@ -35,6 +35,13 @@ module OptionsGeneralGame
     # Passing turn gives option for next player to steal turn
     @main_ui.instruction = INSTRUCTION_STEAL_TURN
     @main_ui.prompt = PROMPT_STEAL_TURN
+    active_player = @game.get_game_value("player_name", @game.active_player_index)
+    if @game.active_player_index+1 < @game.number_of_players
+      stealing_player = @game.get_game_value("player_name", @game.active_player_index+1)
+    else
+      stealing_player = @game.get_game_value("player_name", 0)
+    end
+    @main_ui.prompt[:header] = "Does #{stealing_player} want to steal #{active_player}'s turn?"
   end
 
   def steal_turn
