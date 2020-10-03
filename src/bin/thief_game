@@ -6,6 +6,7 @@ require 'terminal-table'
 require 'colorize'
 
 # files
+require_relative '../lib/user_interface/app_router'
 require_relative '../lib/user_interface/game_helper'
 require_relative '../lib/controllers/general_game'
 require_relative '../lib/controllers/game_setup'
