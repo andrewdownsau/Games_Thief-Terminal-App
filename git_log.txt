@@ -1,0 +1,337 @@
+commit aabbf22315f565faf719a2ad2255d8778b4a838b
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 23:41:37 2020 -0700
+
+    Changed instructions to only execute from path as I could not get bash profile to work
+
+commit 382ea725ba0c5d3367362aabcfaf23aa34556148
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 23:25:43 2020 -0700
+
+    App router required file moved to bottom
+
+commit 1635bcf9433bb30524259dd7e09ea7db9ced3251
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 23:23:40 2020 -0700
+
+    Minor mistake of required files corrected
+
+commit a045a76bbaea08ba81d273c6f6d25e4adda59735
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 23:21:04 2020 -0700
+
+    Updated README to create export path to executable
+
+commit ba4742ec5c99d0a58b333ba7cdec7b358a48abcf
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 23:20:32 2020 -0700
+
+    Added app_router to relative files required for execution
+
+commit c52f69c1074dafdf536da016e6353c0ddb262a13
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 23:04:10 2020 -0700
+
+    Made executable files executable
+
+commit be3c2de9c28e4f47a9b266e4dc88f78a04698c9e
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 23:00:41 2020 -0700
+
+    Updated README to include instructions for setup and run
+
+commit 6740fe484b7ef07f5ebacdc5abe2093a68ae5033
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 22:59:41 2020 -0700
+
+    Executable setup and run file added for installation of game
+
+commit 3514c89daaea4cfae01a3ce5a2fc50044a5fac8b
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 22:42:41 2020 -0700
+
+    Changed location of option code to controller folder to separate concerns
+
+commit b42572a55afcb658fc2c1324cd921106296b878f
+Merge: 5cb2389 861af1e
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 19:40:16 2020 -0700
+
+    Merge branch 'master' of https://github.com/andrewdownsau/thief_game_terminal_app
+    merge needed because of powerpoint presentation upload
+
+commit 5cb238905e27c5ba024f1aa2f84ddeff6603fd41
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 19:39:16 2020 -0700
+
+    Added test cases document that outlines basic manual tests
+
+commit 861af1edeac3682ca76b5ea46802b6407a9b6602
+Author: andrewdownsau <66402176+andrewdownsau@users.noreply.github.com>
+Date:   Sat Oct 3 11:07:35 2020 +1000
+
+    Delete file.md
+
+commit 6ab6cf2fae03aede8d8e46e59e5b031ca522fa6b
+Author: andrewdownsau <66402176+andrewdownsau@users.noreply.github.com>
+Date:   Fri Oct 2 18:07:16 2020 -0700
+
+    Add files via upload
+
+commit 17332f7a6cc96c4e95ede6f329bdf1101d5d8d37
+Author: andrewdownsau <66402176+andrewdownsau@users.noreply.github.com>
+Date:   Sat Oct 3 11:06:53 2020 +1000
+
+    Delete Terminal_Theif_app_presentation.pdf
+
+commit 2db83e2f0fd3737fc79f3acdbb15d4ea2e0d1aed
+Author: andrewdownsau <66402176+andrewdownsau@users.noreply.github.com>
+Date:   Sat Oct 3 11:06:15 2020 +1000
+
+    Create file.md
+
+commit fe4294f19f0fda41d038470e564546ab373f8de7
+Author: andrewdownsau <66402176+andrewdownsau@users.noreply.github.com>
+Date:   Fri Oct 2 18:04:20 2020 -0700
+
+    Add files via upload
+
+commit 3c8f71415b856e6cfc1c47a4d9fc24c44ee4862a
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 17:53:12 2020 -0700
+
+    Refactored main ui code for cleaner methods
+
+commit 3fda776cddf746b85262a6c58a17a4ab9a1c968d
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 17:48:04 2020 -0700
+
+    Changed prompt for stealing turn to include player names
+
+commit 010e78dbaea51984681c91258e5f2eff1777098e
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 17:31:32 2020 -0700
+
+    Separated app_router to new modules for various options
+
+commit 878f87af1038faa645d4d06c201317c181dca26c
+Author: Andrew Downs <you@example.com>
+Date:   Fri Oct 2 00:15:41 2020 -0700
+
+    Added functionality for stealing turns and starting new rounds
+
+commit 37f2a4922b0f1b426d121e05e01de72f128367f3
+Author: Andrew Downs <you@example.com>
+Date:   Thu Oct 1 23:49:20 2020 -0700
+
+    Confirm holds and continue turn option feature added
+
+commit a514e330e4735407e00db70a69155f2a2d4de0df
+Author: Andrew Downs <you@example.com>
+Date:   Thu Oct 1 22:12:09 2020 -0700
+
+    Confirm holds error handling added
+
+commit 47a55c609b7959d218c1b068d56e262856677f82
+Author: Andrew Downs <you@example.com>
+Date:   Thu Oct 1 21:50:15 2020 -0700
+
+    Library refactor complete, up to date with old code features
+
+commit b63ca197d5fe9a90c09432995627369f9f20cec3
+Author: Andrew Downs <you@example.com>
+Date:   Thu Oct 1 21:48:42 2020 -0700
+
+    Added functionalty to hold and release dice values/sets
+
+commit 38082b7b5e774befb09b91c011b1b987c5e6d6d3
+Author: Andrew Downs <you@example.com>
+Date:   Thu Oct 1 20:27:29 2020 -0700
+
+    Fixed bug that would delete vals while still determining valid values
+
+commit 18b335622f96fe4758feb6e61ed274f095c4d84f
+Author: Andrew Downs <you@example.com>
+Date:   Thu Oct 1 19:51:52 2020 -0700
+
+    Refactored round roll results into valid hash for prompts and scores
+
+commit b7d7ed192af089f50cb676f32c70cfc8dbce58ea
+Author: Andrew Downs <you@example.com>
+Date:   Thu Oct 1 00:05:46 2020 -0700
+
+    Roll outcomes first attempt, comitt before refactor
+
+commit db432f1dd97b2ec5de166b8cc432537ed6e1ca12
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 30 18:17:39 2020 -0700
+
+    Removed dice_roll class as all functionality shared with round
+
+commit 08527f069e21f94a8004b1b3495043ecba87aad2
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 30 18:14:35 2020 -0700
+
+    Added dice roll functionality
+
+commit 529ff6c199ffc80c3e60512128fddc0dffb63dc4
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 30 17:09:17 2020 -0700
+
+    Populated business logic basic attributes and functions
+
+commit 646439baa58691b510d4b0c830791bd67835687a
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 30 02:13:26 2020 -0700
+
+    Added players and game functionality to scoreboard
+
+commit 8ce0f5d87f9ad479df36c87e7f073f25d48e9611
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 30 00:24:57 2020 -0700
+
+    Added routing from prompts and finished main menu and game setup
+
+commit 31a047ffc48f670d76867d560740274c5282ff1a
+Author: Andrew Downs <you@example.com>
+Date:   Tue Sep 29 21:40:48 2020 -0700
+
+    Built main framework of UI components for starting menu
+
+commit 0864fc264755b7f0137a2af410e43a7a533c9a09
+Author: Andrew Downs <you@example.com>
+Date:   Tue Sep 29 20:27:31 2020 -0700
+
+    Redesigned codebase lib into new_lib, added all skeleton files
+
+commit dfd34b5fb1489a92d361a7c846e37dddf540da5f
+Author: Andrew Downs <you@example.com>
+Date:   Tue Sep 29 20:25:54 2020 -0700
+
+    minor changes to code, before complete refactor of lib
+
+commit b7d4f46f105f2c85c308e8abacc6ecb04142d5bf
+Author: Andrew Downs <you@example.com>
+Date:   Sun Sep 27 23:14:17 2020 -0700
+
+    Colorize added to prompts, pot calculator added to scoreboard
+
+commit 3bcf138da07cb30d5f0d8bd35a97dbc86e6f7870
+Author: Andrew Downs <you@example.com>
+Date:   Sun Sep 27 20:06:50 2020 -0700
+
+    User prompt router added with roll routing sequence
+
+commit c00aee0546a3f69de72a00931cecbfc7a3008ae4
+Author: Andrew Downs <you@example.com>
+Date:   Sun Sep 27 19:27:58 2020 -0700
+
+    Refactored game board file to include instruction, score, result and prompt instance variables
+
+commit a0b04fbb367017af8123d99e9e3b6eea048f3ab3
+Author: Andrew Downs <you@example.com>
+Date:   Sun Sep 27 19:26:52 2020 -0700
+
+    Added pot calc file blank
+
+commit 2d85ba1ead2e0d7480223feae7013e3df93d6187
+Author: Andrew Downs <you@example.com>
+Date:   Sun Sep 27 19:26:27 2020 -0700
+
+    Added roll outcome variable instance to output results of rolls
+
+commit 2e686c13e49e01b359859b73f762d0d8b6fb00eb
+Author: Andrew Downs <you@example.com>
+Date:   Sun Sep 27 18:06:39 2020 -0700
+
+    Added roll calculcator to game that outputs hash of valid dice values
+
+commit c26eacdba23d6dcdc3b5f91184cdec180b07960f
+Author: Andrew Downs <you@example.com>
+Date:   Sun Sep 27 15:50:20 2020 -0700
+
+    Added roll input to game board and basic logic
+
+commit 1270e20ac0d839aa0c4a72fae8c6a9eb706c09c2
+Author: Andrew Downs <you@example.com>
+Date:   Thu Sep 24 22:50:05 2020 -0700
+
+    Added game and gameboard class and added simple scoreboard function
+
+commit c8f906d1e41cbedd9be2e04a496d06fe41eab7e5
+Author: Andrew Downs <you@example.com>
+Date:   Thu Sep 24 22:02:59 2020 -0700
+
+    Refactored code to include repository and setter class for games
+
+commit ae6df302a869e0ca14e1fe01bffa76c5eea95674
+Author: Andrew Downs <you@example.com>
+Date:   Thu Sep 24 19:59:45 2020 -0700
+
+    Added game settings page with user input prompts for number of players and names
+
+commit ea1d5ed9a14f5c512375ea49a08ece9b7758cefa
+Author: Andrew Downs <you@example.com>
+Date:   Thu Sep 24 18:30:42 2020 -0700
+
+    Added menu ruby file, gem file and game_helper to build menu skeleton
+
+commit 3553d947c33d905178b1d4a813a2d50a87adc5b5
+Author: Andrew Downs <you@example.com>
+Date:   Thu Sep 24 17:37:57 2020 -0700
+
+    Added implementation plan to README.md file
+
+commit 85eb7b9a543a0160f83cdd94de05973f0fbb6269
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 23 22:19:57 2020 -0700
+
+    Changed flowchart link to png in README
+
+commit 4f1c9eafbd126d9ee111e4f95a255ba981af540d
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 23 22:19:31 2020 -0700
+
+    Removed odg files
+
+commit 3da9c0ebb8272e2a7a27127e41cc5a47505a7705
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 23 22:18:40 2020 -0700
+
+    Changed flowchart to png and added to README
+
+commit 19b9da0ac6b2656bf51b14969620eb7cbb8ed321
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 23 21:11:38 2020 -0700
+
+    Added flowchart diagram of program control flow to docs folder and README link
+
+commit 8f5ece187c6fa7b69a4fa661e7f85dc58ee1e508
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 23 19:16:48 2020 -0700
+
+    Updated README to include outline of user interaction of MVP features
+
+commit a2ba1fdc8330f1e7d295f57b330be07fe61b0c5a
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 23 18:06:03 2020 -0700
+
+    Updated README to separate MVP features to expansions
+
+commit 2c941ed507bb93dd0cd9bfc35283801b4349ea52
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 23 17:40:44 2020 -0700
+
+    Updated README to include extended list of detailed features for terminal app
+
+commit 9f8c6a62e88c60acd07c10608994d7e91c54efad
+Author: Andrew Downs <you@example.com>
+Date:   Wed Sep 23 00:00:17 2020 -0700
+
+    Updatded README to include Software dev plan and start of features list
+
+commit b0d531dff59267b2f0513140925f8638152eb1e8
+Author: Andrew Downs <you@example.com>
+Date:   Tue Sep 22 19:51:48 2020 -0700
+
+    initial commit with README title
