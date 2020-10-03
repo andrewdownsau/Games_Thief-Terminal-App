@@ -22,6 +22,16 @@ module OptionsGeneralGame
     initiate_round("begin")
   end
 
+  def start_game_test
+    @game = Game.new
+    @game.set_player("Tom")
+    @game.set_player("Harry")
+    @game.set_player("Richard")
+    @game.number_of_players = 3
+    @game.randomize_players
+    initiate_round("begin")
+  end
+
   def restart_game
     @new_game = Game.new
     @new_game.players = @game.players

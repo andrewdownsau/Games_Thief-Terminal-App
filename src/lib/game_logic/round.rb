@@ -90,6 +90,10 @@ class Round
   def roll
     @dice_value_arr = @dice_set.map{|die| die.value = rand(1..6).to_s if die.held_status == "free"}
     @dice_value_arr.delete(nil)
+    # @dice_value_arr = @dice_set.each_with_index.map{|die,i| die.value = (i+1).to_s} # Test case for straight roll
+    # @dice_value_arr = @dice_set.map{|die| die.value = 1.to_s} # Test case for full set
+    # @dice_value_arr = @dice_set.each_with_index.map{|die,i| i < 3 ? die.value = 1.to_s : die.value = 2.to_s} # Test case for partial set
+    # @dice_value_arr = @dice_set.map{|die| die.value = rand(7..100).to_s} # Test case for bust
     @valid_dice_options = { prompt: [], die: [], score: [], dice_number: 0 }
     set_valid_dice_options
   end

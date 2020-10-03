@@ -51,8 +51,8 @@ class AppRouter
     case prompt_activity
       when nil, "exit_to_menu" then start_app
       when "tutorial" then puts "Goes to tutorial page"
-      when "new_game", "reset_game" then new_game_setup_0
-      # when "new_game" then start_game
+      # when "new_game", "reset_game" then new_game_setup_0 # Comment out for testing to skip setup
+      when "new_game" then start_game_test # Uncomment for test cases to skip setup
       when "start_game" then start_game
       when "start_new_game" then restart_game
       when "roll_dice" then roll_free_dice
