@@ -31,32 +31,37 @@ class UserInterface
     heading_str << "╱╰╯╰┻┻┻━┻╯╱╱╰┻━┻┻┻┻┻┻━┻━━┻━╯╰━━┻━━┻┻┻┻━╯\n"
   end
 
-  def instruction(added_strings_arr)
-    
+  def select_prompt
+    @prompt_selection = PROMPT.select(@prompt[:header]) do |menu|
+      for i in 0..@prompt[:options].length-1 do
+        menu.choice({ 
+          name: @prompt[:options][i].colorize(@prompt[:colors][i]), 
+          value: @prompt[:values][i] 
+        })
+      end
+    end
+  end
+
+  def ask_range_prompt
+    @prompt_response = PROMPT.ask(@prompt[:header]) do |question|
+      question.in @prompt[:input_expected]
+      question.messages[:range?] = @prompt[:error_message]
+    end
+  end
+
+  def ask_text_prompt
+    @prompt_response = PROMPT.ask(@prompt[:header]) do |question|
+      question.required true
+      question.validate /\A\w+\Z/
+      question.modify  :capitalize
+    end
   end
 
   def set_prompt
     case @prompt[:type]
-    when "select"
-      @prompt_selection = PROMPT.select(@prompt[:header]) do |menu|
-        for i in 0..@prompt[:options].length-1 do
-          menu.choice({ 
-            name: @prompt[:options][i].colorize(@prompt[:colors][i]), 
-            value: @prompt[:values][i] 
-          })
-        end
-      end
-    when "ask_range"
-      @prompt_response = PROMPT.ask(@prompt[:header]) do |question|
-        question.in @prompt[:input_expected]
-        question.messages[:range?] = @prompt[:error_message]
-      end
-    when "ask_text"
-      @prompt_response = PROMPT.ask(@prompt[:header]) do |question|
-        question.required true
-        question.validate /\A\w+\Z/
-        question.modify  :capitalize
-      end
+    when "select" then select_prompt
+    when "ask_range" then ask_range_prompt
+    when "ask_text" then ask_text_prompt
     end
   end
 
