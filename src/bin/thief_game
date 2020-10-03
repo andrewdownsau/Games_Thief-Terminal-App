@@ -7,12 +7,12 @@ require 'colorize'
 
 # files
 require_relative '../lib/user_interface/game_helper'
-require_relative '../lib/user_interface/app_router'
 require_relative '../lib/controllers/general_game'
 require_relative '../lib/controllers/game_setup'
 require_relative '../lib/controllers/roll_outcome'
 require_relative '../lib/user_interface/main_ui'
 require_relative '../lib/game_logic/game'
+require_relative '../lib/user_interface/app_router'
 
 
 app = AppRouter.new
