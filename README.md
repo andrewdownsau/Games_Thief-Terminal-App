@@ -24,10 +24,13 @@ git clone https://github.com/andrewdownsau/thief_game_terminal_app.git ~/thief_g
 
 5. Open your `.bash_profile` in a text editor
 
+```bash
+nano ~/.bash_profile
+
 6. Add this line
 
 ```bash
-export PATH=$PATH:$HOME/thief_game_terminal_app/bin
+export PATH=$PATH:$HOME/thief_game_terminal_app/src/bin
 ```
 
 7. Restart your terminal to make sure `.bash_profile` loads the app into your PATH
