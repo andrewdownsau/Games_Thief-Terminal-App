@@ -4,7 +4,38 @@
 
 <br>
 
-## Installation and setup
+## Installation and setup (linux/mac)
+
+1. Install ruby, best to use [asdf](https://asdf-vm.com/)
+
+2. Install [git](https://git-scm.com/downloads)
+
+3. `git clone` the app to your home directory
+
+```bash
+git clone https://github.com/andrewdownsau/thief_game_terminal_app.git ~/thief_game_terminal_app
+```
+
+4. Run the `setup` executable file to install app dependencies and set bin filepath
+
+```bash
+~/thief_game_terminal_app/src/bin/setup
+```
+
+5. Open your `.bash_profile` in a text editor
+
+6. Add this line
+
+```bash
+export PATH=$PATH:$HOME/thief_game_terminal_app/bin
+```
+
+7. Restart your terminal to make sure `.bash_profile` loads the app into your PATH
+
+8. Run the `thief_game` executable to start the app
+
+```bash
+thief_game
 
 <br>
 
