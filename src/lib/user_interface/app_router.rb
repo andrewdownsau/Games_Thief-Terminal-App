@@ -1,15 +1,15 @@
-# gems
-require 'tty-prompt'
-require 'terminal-table'
-require 'colorize'
+# # gems
+# require 'tty-prompt'
+# require 'terminal-table'
+# require 'colorize'
 
-# files
-require_relative 'game_helper'
-require_relative '../controllers/general_game'
-require_relative '../controllers/game_setup'
-require_relative '../controllers/roll_outcome'
-require_relative 'main_ui'
-require_relative '../game_logic/game'
+# # files
+# require_relative 'game_helper'
+# require_relative '../controllers/general_game'
+# require_relative '../controllers/game_setup'
+# require_relative '../controllers/roll_outcome'
+# require_relative 'main_ui'
+# require_relative '../game_logic/game'
 
 class AppRouter
   include GameHelper
